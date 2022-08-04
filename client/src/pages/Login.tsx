@@ -1,16 +1,67 @@
-import React from "react";
-// 최소한 이메일, 비밀번호 input, 제출 button을 갖도록 구성해주세요
-// 이메일과 비밀번호의 유효성을 확인합니다
-//  이메일 조건 : 최소 @, . 포함
-//  비밀번호 조건 : 8자 이상 입력
-//  이메일과 비밀번호가 모두 입력되어 있고, 조건을 만족해야 제출 버튼이 활성화 되도록 해주세요
-// 로그인 API를 호출하고, 올바른 응답을 받았을 때 루트 경로로 이동시켜주세요
-//  응답으로 받은 토큰은 로컬 스토리지에 저장해주세요
-//  다음 번에 로그인 시 토큰이 존재한다면 루트 경로로 리다이렉트 시켜주세요
-//  어떤 경우든 토큰이 유효하지 않다
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { onhandleLogin } from "../apis";
+import reg from "../components/Reg";
 
 const Login = () => {
-  return <div></div>;
+  const [email, setEmail] = useState<string>("");
+  const [pw, setPw] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
+
+  useEffect(() => {
+    // 로그인이 되어있다면 바로 리다이렉트되도록
+    token && navigate("/todo");
+  }, [token, navigate]); // TODO: navigate를 Deps으로..?
+
+  useEffect(() => {
+    reg.email.test(email) && reg.password.test(pw)
+      ? setError(false)
+      : setError(true);
+  }, [email, pw]);
+
+  const onLoginClick = async () => {
+    const data = {
+      email: email,
+      password: pw,
+    };
+    onhandleLogin(data);
+    setToken(localStorage.getItem("token")); // TODO: 작동하는데 너무 느림
+  };
+
+  const goToRegister = () => {
+    navigate("/auth/register");
+  };
+
+  return (
+    <div>
+      <h1>login</h1>
+      <div>
+        <input
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+          placeholder="email"
+          autoComplete="off"
+        />
+        <input
+          onChange={(event) => setPw(event.target.value)}
+          placeholder="password"
+          type="password"
+          autoComplete="off"
+        />
+        {error && <p>형식에 맞게 이메일과 비밀번호를 작성해주세요</p>}
+      </div>
+      <button onClick={onLoginClick} disabled={error}>
+        login
+      </button>
+      <button onClick={goToRegister}>register</button>
+    </div>
+  );
 };
 
 export default Login;
