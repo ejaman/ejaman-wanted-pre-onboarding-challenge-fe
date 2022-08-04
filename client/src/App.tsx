@@ -15,7 +15,6 @@ function App() {
         <Route path="/auth/register" element={<Register />} />
         <Route element={<Layout />}>
           <Route path="/todo" element={<Todos />} />
-          {/* <Route path="/todo/detail" element={<TodoDetail  />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

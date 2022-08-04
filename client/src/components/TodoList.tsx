@@ -1,42 +1,50 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { deleteTodo, ListProps, updateTodo } from "../apis";
+import { BasicBtn, Input, Title } from "./AddTodo";
 
-const TodoDetail = ({ list }: ListProps) => {
+const TodoList = ({ list }: ListProps) => {
   const token = localStorage.getItem("token") || "";
   const [title, setTitle] = useState<string>(list.title);
   const [content, setContent] = useState<string>(list.content);
 
   return (
-    <div>
-      <input
+    <ListContainer>
+      <Title
         value={title}
         onChange={(event) => {
           setTitle(event.currentTarget.value);
         }}
       />
-      <input
+      <Input
         value={content}
         onChange={(event) => {
           setContent(event.currentTarget.value);
         }}
       />
-      <p>{list.updatedAt}</p>
-      <button
+      <P>{list.updatedAt}</P>
+      <BasicBtn
         onClick={() => {
           updateTodo(list.id, `Bearer ${token}`, { title, content });
         }}
       >
-        수정
-      </button>
-      <button
+        Update
+      </BasicBtn>
+      <BasicBtn
         onClick={() => {
           deleteTodo(list.id, `Bearer ${token}`);
         }}
       >
-        삭제
-      </button>
-    </div>
+        Delete
+      </BasicBtn>
+    </ListContainer>
   );
 };
+const ListContainer = styled.div`
+  margin: 2rem;
+`;
+const P = styled.p`
+  font-size: 0.7rem;
+`;
 
-export default TodoDetail;
+export default TodoList;
