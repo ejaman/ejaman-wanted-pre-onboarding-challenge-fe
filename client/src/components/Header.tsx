@@ -22,6 +22,7 @@ const HeaderDiv = styled.header`
   display: flex;
   padding: 1rem 5rem;
   align-items: center;
+  color: #ffffff63;
 `;
 const LogoutBtn = styled.button`
   margin-left: auto;
@@ -29,8 +30,9 @@ const LogoutBtn = styled.button`
   font-weight: bold;
   background: none;
   border: none;
+  color: #ffffff63;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 `;
 

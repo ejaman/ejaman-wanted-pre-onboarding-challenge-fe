@@ -28,10 +28,10 @@ const AddTodo = () => {
     </AddContainer>
   );
 };
-const AddContainer = styled.form`
+export const AddContainer = styled.form`
   padding: 1rem;
   padding-bottom: 2rem;
-  border: 1px solid;
+  color: #ffffff63;
 `;
 
 export const Input = styled.input`
@@ -39,21 +39,24 @@ export const Input = styled.input`
   margin: auto;
   text-align: center;
   border: none;
-  /* border-bottom: 1px solid; */
+  background: none;
   padding: 0.3rem;
   margin-bottom: 1rem;
   outline: none;
   width: 30rem;
+  color: #ffffff63;
 `;
 export const Title = styled(Input)`
   font-size: 1rem;
   font-weight: bold;
+  color: #ffffff63;
 `;
 
 export const BasicBtn = styled.button`
   background: none;
   border: none;
   font-weight: bold;
+  color: #ffffff63;
   &:hover {
     opacity: 0.6;
   }

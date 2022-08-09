@@ -37,11 +37,20 @@ const TodoList = ({ list }: ListProps) => {
       >
         Delete
       </BasicBtn>
+      <Divider></Divider>
     </ListContainer>
   );
 };
+const Divider = styled.div`
+  width: 3rem;
+  height: 1px;
+  background-color: #ffffff63;
+  margin: auto;
+  margin-top: 1.5rem;
+`;
 const ListContainer = styled.div`
   margin: 2rem;
+  color: #ffffff63;
 `;
 const P = styled.p`
   font-size: 0.7rem;

@@ -16,16 +16,39 @@ const Todos = () => {
 
   return (
     <Container>
-      <AddTodo />
-      {lists.map((list, idx) => (
-        <TodoList list={list} key={idx} />
-      ))}
+      <AddDiv>
+        <AddTodo />
+      </AddDiv>
+      <ListDiv>
+        {lists.map((list, idx) => (
+          <TodoList list={list} key={idx} />
+        ))}
+      </ListDiv>
     </Container>
   );
 };
 const Container = styled.div`
   margin: auto;
   text-align: center;
+  display: flex;
 `;
 
+const Div = styled.div`
+  /* border: 1px solid; */
+  margin: auto;
+  overflow: auto;
+`;
+const AddDiv = styled(Div)`
+  border-radius: 50%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
+const ListDiv = styled(Div)`
+  margin-top: 4rem;
+  height: 30rem;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+`;
 export default Todos;
