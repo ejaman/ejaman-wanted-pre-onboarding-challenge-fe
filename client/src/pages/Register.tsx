@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onhandleRegister } from "../apis";
 import reg from "../components/Reg";
+import {
+  BasicBtn,
+  Container,
+  LoginInput,
+  PText,
+} from "../components/styleComponents/LoginRegister";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -31,32 +37,38 @@ const Register = () => {
     navigate("/auth/login");
   };
   return (
-    <div>
+    <Container>
       <h1>register</h1>
       <div>
-        <p>
+        <PText>
           이메일 조건 : 최소 @, . 포함, 비밀번호 조건 : 알파벳 + 숫자 조합으로
           8자 이상 입력
-        </p>
-        <input
+        </PText>
+        <LoginInput
           onChange={(event) => {
             setEmail(event.target.value);
           }}
           placeholder="email"
           autoComplete="off"
         />
-        <input
+        <LoginInput
           onChange={(event) => setPw(event.target.value)}
           placeholder="password"
           autoComplete="off"
           type="password"
         />
-        {error && <p>형식에 맞게 이메일과 비밀번호를 작성해주세요</p>}
+        <PText>
+          {error ? (
+            <p>형식에 맞게 이메일과 비밀번호를 작성해주세요.</p>
+          ) : (
+            <p>올바른 이메일과 비밀번호 형식입니다.</p>
+          )}
+        </PText>
+        <BasicBtn onClick={onSubmitClick} disabled={error}>
+          register
+        </BasicBtn>
       </div>
-      <button onClick={onSubmitClick} disabled={error}>
-        register
-      </button>
-    </div>
+    </Container>
   );
 };
 

@@ -13,7 +13,7 @@ const Header = () => {
   };
   return (
     <HeaderDiv>
-      <h3>todo application</h3>
+      <h3>Wanted preonboarding challenge FE 1</h3>
       {token && <LogoutBtn onClick={onLogoutClick}>Logout</LogoutBtn>}
     </HeaderDiv>
   );

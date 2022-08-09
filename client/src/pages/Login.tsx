@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onhandleLogin } from "../apis";
 import reg from "../components/Reg";
+import {
+  BasicBtn,
+  Container,
+  LoginInput,
+  PText,
+} from "../components/styleComponents/LoginRegister";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -38,29 +44,37 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h1>login</h1>
       <div>
-        <input
+        <LoginInput
           onChange={(event) => {
             setEmail(event.target.value);
           }}
           placeholder="email"
           autoComplete="off"
         />
-        <input
+        <LoginInput
           onChange={(event) => setPw(event.target.value)}
           placeholder="password"
           type="password"
           autoComplete="off"
         />
-        {error && <p>형식에 맞게 이메일과 비밀번호를 작성해주세요</p>}
+        <PText>
+          {error ? (
+            <p>형식에 맞게 이메일과 비밀번호를 작성해주세요.</p>
+          ) : (
+            <p>올바른 이메일과 비밀번호 형식입니다.</p>
+          )}
+        </PText>
       </div>
-      <button onClick={onLoginClick} disabled={error}>
-        login
-      </button>
-      <button onClick={goToRegister}>register</button>
-    </div>
+      <div>
+        <BasicBtn onClick={onLoginClick} disabled={error}>
+          login
+        </BasicBtn>
+        <BasicBtn onClick={goToRegister}>register</BasicBtn>
+      </div>
+    </Container>
   );
 };
 
