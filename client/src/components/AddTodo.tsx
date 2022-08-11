@@ -31,7 +31,7 @@ const AddTodo = () => {
 export const AddContainer = styled.form`
   padding: 1rem;
   padding-bottom: 2rem;
-  color: #ffffff63;
+  color: #ffffffca;
 `;
 
 export const Input = styled.input`
@@ -44,19 +44,20 @@ export const Input = styled.input`
   margin-bottom: 1rem;
   outline: none;
   width: 30rem;
-  color: #ffffff63;
+  color: #ffffffca;
 `;
 export const Title = styled(Input)`
   font-size: 1rem;
   font-weight: bold;
-  color: #ffffff63;
+  color: #ffffffca;
 `;
 
 export const BasicBtn = styled.button`
   background: none;
   border: none;
   font-weight: bold;
-  color: #ffffff63;
+  color: #ffffffca;
+
   &:hover {
     opacity: 0.6;
   }

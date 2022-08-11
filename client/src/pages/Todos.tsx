@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getTodos, ListType } from "../apis";
 import AddTodo from "../components/AddTodo";
@@ -7,6 +8,12 @@ import TodoList from "../components/TodoList";
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
   const [lists, setLists] = useState<ListType[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 로그인이 되어있다면 바로 리다이렉트되도록
+    !token && navigate("/auth/login");
+  }, [token, navigate]); // TODO: navigate를 Deps으로..?
 
   useEffect(() => {
     getTodos(token).then((res) => {
@@ -38,11 +45,7 @@ const Div = styled.div`
   margin: auto;
   overflow: auto;
 `;
-const AddDiv = styled(Div)`
-  border-radius: 50%;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-`;
+const AddDiv = styled(Div)``;
 const ListDiv = styled(Div)`
   margin-top: 4rem;
   height: 30rem;
