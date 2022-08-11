@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onhandleRegister } from "../apis";
+import { onhandleRegister } from "../apis/apis";
 import reg from "../vaildation";
 import {
   BasicBtn,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getTodos, ListType } from "../apis";
+import { ToDoAPI, ListType } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 
@@ -16,7 +16,7 @@ const Todos = () => {
   }, [token, navigate]); // TODO: navigate를 Deps으로..?
 
   useEffect(() => {
-    getTodos(token).then((res) => {
+    ToDoAPI.getTodos(token).then((res) => {
       setLists(res.data.data);
     });
   }, [lists, token]); // TODO: 렌더링 계속되는거같음

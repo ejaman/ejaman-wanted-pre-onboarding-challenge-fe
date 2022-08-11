@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { deleteTodo, ListProps, updateTodo } from "../apis";
+import { ToDoAPI, ListProps } from "../apis/ToDo";
 import { BasicBtn, Input, Title } from "./AddTodo";
 
 const TodoList = ({ list }: ListProps) => {
@@ -25,14 +25,15 @@ const TodoList = ({ list }: ListProps) => {
       <P>{list.updatedAt}</P>
       <BasicBtn
         onClick={() => {
-          updateTodo(list.id, `Bearer ${token}`, { title, content });
+          ToDoAPI.update(list.id, token, { title, content });
         }}
       >
         Update
       </BasicBtn>
       <BasicBtn
         onClick={() => {
-          deleteTodo(list.id, `Bearer ${token}`);
+          ToDoAPI.del(list.id, token);
+          // deleteTodo(list.id, `Bearer ${token}`);
         }}
       >
         Delete

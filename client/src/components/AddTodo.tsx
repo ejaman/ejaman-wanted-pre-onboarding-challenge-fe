@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { createTodo } from "../apis";
+import { ToDoAPI } from "../apis/ToDo";
 
 const AddTodo = () => {
   const token = localStorage.getItem("token") || "";
@@ -13,7 +13,7 @@ const AddTodo = () => {
       title: TitleRef.current!.value,
       content: ContentRef.current!.value,
     };
-    createTodo(token, todo);
+    ToDoAPI.create(token, todo);
     TitleRef.current!.value = "";
     ContentRef.current!.value = "";
   };
