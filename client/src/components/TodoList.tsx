@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ToDoAPI, ListProps } from "../apis/ToDo";
-import { BasicBtn, Input, Title } from "./AddTodo";
+import { BasicButton, Input, Title } from "./AddTodo";
 
 const TodoList = ({ list }: ListProps) => {
   const token = localStorage.getItem("token") || "";
@@ -23,26 +23,26 @@ const TodoList = ({ list }: ListProps) => {
         }}
       />
       <P>{list.updatedAt}</P>
-      <BasicBtn
+      <BasicButton
         onClick={() => {
           ToDoAPI.update(list.id, token, { title, content });
         }}
       >
         Update
-      </BasicBtn>
-      <BasicBtn
+      </BasicButton>
+      <BasicButton
         onClick={() => {
           ToDoAPI.del(list.id, token);
           // deleteTodo(list.id, `Bearer ${token}`);
         }}
       >
         Delete
-      </BasicBtn>
+      </BasicButton>
     </ListContainer>
   );
 };
 
-const ListContainer = styled.div`
+const ListContainer = styled.section`
   margin: 2rem;
   color: #ffffffca;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,

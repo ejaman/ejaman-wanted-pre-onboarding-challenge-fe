@@ -31,7 +31,7 @@ export const PText = styled.div`
   font-size: 0.9rem;
   margin: 1rem;
 `;
-export const BasicBtn = styled.button`
+export const BasicButton = styled.button`
   padding: 0.6rem;
   margin-top: 0.5rem;
   background-color: #ffffff48;

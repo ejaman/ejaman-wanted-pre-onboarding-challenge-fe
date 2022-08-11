@@ -24,11 +24,11 @@ const AddTodo = () => {
       <Title ref={TitleRef} placeholder="Title" />
       <Input ref={ContentRef} placeholder="Content" />
       {/* TODO: input, textarea 차이? */}
-      <BasicBtn onClick={onhandleAdd}>ADD</BasicBtn>
+      <BasicButton onClick={onhandleAdd}>ADD</BasicButton>
     </AddContainer>
   );
 };
-export const AddContainer = styled.form`
+export const AddContainer = styled.section`
   padding: 1rem;
   padding-bottom: 2rem;
   color: #ffffffca;
@@ -52,7 +52,7 @@ export const Title = styled(Input)`
   color: #ffffffca;
 `;
 
-export const BasicBtn = styled.button`
+export const BasicButton = styled.button`
   background: none;
   border: none;
   font-weight: bold;

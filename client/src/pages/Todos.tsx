@@ -23,14 +23,14 @@ const Todos = () => {
 
   return (
     <Container>
-      <AddDiv>
+      <AddSection>
         <AddTodo />
-      </AddDiv>
-      <ListDiv>
+      </AddSection>
+      <ListSection>
         {lists.map((list, idx) => (
           <TodoList list={list} key={idx} />
         ))}
-      </ListDiv>
+      </ListSection>
     </Container>
   );
 };
@@ -40,13 +40,13 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Div = styled.div`
+const Section = styled.section`
   /* border: 1px solid; */
   margin: auto;
   overflow: auto;
 `;
-const AddDiv = styled(Div)``;
-const ListDiv = styled(Div)`
+const AddSection = styled(Section)``;
+const ListSection = styled(Section)`
   margin-top: 4rem;
   height: 30rem;
 
