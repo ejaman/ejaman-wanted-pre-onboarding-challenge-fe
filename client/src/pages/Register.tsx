@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onhandleRegister } from "../apis";
-import reg from "../components/Reg";
+import reg from "../vaildation";
 import {
   BasicBtn,
   Container,
