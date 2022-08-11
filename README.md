@@ -1,7 +1,17 @@
 # wanted-pre-onboarding-challenge-fe-1
+
 원티드 FE 챌린지
 
-## Assignment 1 - Login / SignUp
+## Demo
+
+링크:
+
+## 사용 스택
+
+react, typescript, redux-toolkit, styled-components
+
+## 기본 Assignment
+
 - /auth 경로에 로그인 / 회원가입 기능을 개발합니다
   - 로그인, 회원가입을 별도의 경로로 분리해도 무방합니다
   - [x] 최소한 이메일, 비밀번호 input, 제출 button을 갖도록 구성해주세요
@@ -13,9 +23,6 @@
   - [x] 응답으로 받은 토큰은 로컬 스토리지에 저장해주세요
   - [x] 다음 번에 로그인 시 토큰이 존재한다면 루트 경로로 리다이렉트 시켜주세요
   - [x] 어떤 경우든 토큰이 유효하지 않다면 사용자에게 알리고 로그인 페이지로 리다이렉트 시켜주세요
-
-## Assignment 2 - Todo List
-
 - Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
   - [x] 목록 / 상세 영역으로 나누어 구현해주세요
   - [x] Todo 목록을 볼 수 있습니다.
@@ -26,15 +33,12 @@
   - [x] 새로고침을 했을 때 현재 상태가 유지되어야 합니다.
   - [x] 개별 Todo를 조회 순서에 따라 페이지 뒤로가기를 통하여 조회할 수 있도록 해주세요.
 - 한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요
-
   - [x] 수정되는 Todo의 내용이 목록에서도 실시간으로 반영되어야 합니다
 
-## 과제 참고 사항
+## 1st refectoring
 
-1. 로컬 서버를 실행했을 때 생성되는 `db/db.json`이 DB 역할을 하게 됩니다. 해당 파일을 삭제하면 DB는 초기화 됩니다.
+## 2nd refectoring
 
-2. 로그인 / 회원 가입 기능은 유저를 DB에 추가하고 JWT 토큰을 응답으로 돌려줄 뿐, 실제 유저별로 Todo 목록을 관계 지어 관리하지는 않습니다. (모든 유저가 하나의 Todo를 가짐)
+## 3rd refectoring
 
-3. 로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.
-
-
+## last refectoring
