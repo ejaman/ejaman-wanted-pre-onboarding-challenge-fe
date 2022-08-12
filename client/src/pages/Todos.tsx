@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-scroll";
 import styled from "styled-components";
 import { ToDoAPI, ListType } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
@@ -19,18 +20,35 @@ const Todos = () => {
     ToDoAPI.getTodos(token).then((res) => {
       setLists(res.data.data);
     });
-  }, [lists, token]); // TODO: 렌더링 계속되는거같음
+  }, [token]); // TODO: 렌더링 계속되는거같음
 
   return (
-    <Container>
-      <AddSection>
-        <AddTodo />
-      </AddSection>
-      <ListSection>
+    <Container id="top">
+      <Nav>
         {lists.map((list, idx) => (
-          <TodoList list={list} key={idx} />
+          <Li key={idx}>
+            <Link to={list.id} spy={true} smooth={true}>
+              {list.title}
+            </Link>
+          </Li>
         ))}
-      </ListSection>
+        <TopButton>
+          <Link to="top" spy={true} smooth={true}>
+            TOP
+          </Link>
+        </TopButton>
+      </Nav>
+      <Content>
+        <Title>WANTED PREONBOARDING CHALLENGE FE 1</Title>
+        <AddSection>
+          <AddTodo />
+        </AddSection>
+        <ListSection>
+          {lists.map((list, idx) => (
+            <TodoList list={list} key={idx} />
+          ))}
+        </ListSection>
+      </Content>
     </Container>
   );
 };
@@ -40,18 +58,41 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Section = styled.section`
-  /* border: 1px solid; */
-  margin: auto;
-  overflow: auto;
+const Title = styled.header`
+  width: 60%;
+  font-weight: 800;
+  font-size: 4rem;
+  text-align: left;
 `;
-const AddSection = styled(Section)``;
-const ListSection = styled(Section)`
-  margin-top: 4rem;
-  height: 30rem;
 
-  &::-webkit-scrollbar {
-    width: 10px;
+const Nav = styled.nav`
+  flex: 25%;
+  text-align: left;
+  font-size: 1.2rem;
+  padding: 1.5rem;
+`;
+
+const TopButton = styled.p`
+  background: none;
+  font-weight: bold;
+  border: none;
+  font-size: 1.2rem;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 3rem;
+  &:hover {
+    opacity: 0.5;
   }
 `;
+
+const Li = styled.li`
+  list-style: none;
+  font-weight: 500;
+`;
+const Content = styled.div`
+  flex: 75%;
+`;
+const Section = styled.section``;
+const AddSection = styled(Section)``;
+const ListSection = styled(Section)``;
 export default Todos;

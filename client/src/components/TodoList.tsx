@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { idText } from "typescript";
 import { ToDoAPI, ListProps } from "../apis/ToDo";
-import { BasicButton, Input, Title } from "./AddTodo";
+import { BasicButton, Textarea, Title } from "./AddTodo";
 
 const TodoList = ({ list }: ListProps) => {
   const token = localStorage.getItem("token") || "";
@@ -10,48 +11,60 @@ const TodoList = ({ list }: ListProps) => {
 
   return (
     <ListContainer>
-      <Title
+      <ListTitle
         value={title}
         onChange={(event) => {
           setTitle(event.currentTarget.value);
         }}
+        spellCheck={false}
+        id={list.id}
       />
-      <Input
+      <Textarea
         value={content}
         onChange={(event) => {
           setContent(event.currentTarget.value);
         }}
+        spellCheck={false}
       />
-      <P>{list.updatedAt}</P>
-      <BasicButton
-        onClick={() => {
-          ToDoAPI.update(list.id, token, { title, content });
-        }}
-      >
-        Update
-      </BasicButton>
-      <BasicButton
-        onClick={() => {
-          ToDoAPI.del(list.id, token);
-          // deleteTodo(list.id, `Bearer ${token}`);
-        }}
-      >
-        Delete
-      </BasicButton>
+      <ButtonContainer>
+        <BasicButton
+          onClick={() => {
+            ToDoAPI.update(list.id, token, { title, content });
+          }}
+        >
+          Update
+        </BasicButton>
+        <BasicButton
+          onClick={() => {
+            ToDoAPI.del(list.id, token);
+            // deleteTodo(list.id, `Bearer ${token}`);
+          }}
+        >
+          Delete
+        </BasicButton>
+      </ButtonContainer>
     </ListContainer>
   );
 };
 
 const ListContainer = styled.section`
-  margin: 2rem;
-  color: #ffffffca;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  padding: 1rem;
-  background-color: #a3a3a311;
+  margin-right: 1rem;
+  border-top: 2px solid;
+  text-align: left;
+  height: 15rem;
+  padding-top: 0.5rem;
 `;
-const P = styled.p`
-  font-size: 0.7rem;
+
+const ListTitle = styled(Title)`
+  width: 90%;
+  height: 3rem;
+  font-weight: 600;
+  font-size: 2.5rem;
+  overflow: hidden;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 3rem;
 `;
 
 export default TodoList;

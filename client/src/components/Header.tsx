@@ -13,16 +13,14 @@ const Header = () => {
   };
   return (
     <HeaderContainer>
-      <h3>Wanted preonboarding challenge FE 1</h3>
       {token && <LogoutButton onClick={onLogoutClick}>Logout</LogoutButton>}
     </HeaderContainer>
   );
 };
 const HeaderContainer = styled.header`
   display: flex;
-  padding: 1rem 5rem;
+  padding: 1rem 5rem 5rem;
   align-items: center;
-  color: #ffffff63;
 `;
 const LogoutButton = styled.button`
   margin-left: auto;
@@ -30,7 +28,6 @@ const LogoutButton = styled.button`
   font-weight: bold;
   background: none;
   border: none;
-  color: #ffffff63;
   &:hover {
     opacity: 0.5;
   }
