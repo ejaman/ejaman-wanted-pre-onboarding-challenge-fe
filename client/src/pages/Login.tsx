@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onhandleLogin } from "../apis";
-import reg from "../components/Reg";
+import { UserAPI } from "../apis/User";
+import reg from "../utils/vaildation";
 import {
-  BasicBtn,
+  BasicButton,
   Container,
   LoginInput,
   PText,
@@ -35,7 +35,7 @@ const Login = () => {
       email: email,
       password: pw,
     };
-    onhandleLogin(data);
+    UserAPI.login(data);
     setToken(localStorage.getItem("token")); // TODO: 작동하는데 너무 느림
   };
 
@@ -69,10 +69,10 @@ const Login = () => {
         </PText>
       </div>
       <div>
-        <BasicBtn onClick={onLoginClick} disabled={error}>
+        <BasicButton onClick={onLoginClick} disabled={error}>
           login
-        </BasicBtn>
-        <BasicBtn onClick={goToRegister}>register</BasicBtn>
+        </BasicButton>
+        <BasicButton onClick={goToRegister}>register</BasicButton>
       </div>
     </Container>
   );

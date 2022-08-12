@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { createTodo } from "../apis";
+import { ToDoAPI } from "../apis/ToDo";
 
 const AddTodo = () => {
   const token = localStorage.getItem("token") || "";
-  const TitleRef = useRef<HTMLInputElement>(null);
-  const ContentRef = useRef<HTMLInputElement>(null);
+  const TitleRef = useRef<HTMLTextAreaElement>(null);
+  const ContentRef = useRef<HTMLTextAreaElement>(null);
 
   const onhandleAdd = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -13,44 +13,65 @@ const AddTodo = () => {
       title: TitleRef.current!.value,
       content: ContentRef.current!.value,
     };
-    createTodo(token, todo);
+    ToDoAPI.create(token, todo);
     TitleRef.current!.value = "";
     ContentRef.current!.value = "";
   };
 
   return (
     <AddContainer>
-      <h3>new task</h3>
-      <Title ref={TitleRef} placeholder="Title" />
-      <Input ref={ContentRef} placeholder="Content" />
-      {/* TODO: input, textarea 차이? */}
-      <BasicBtn onClick={onhandleAdd}>ADD</BasicBtn>
+      <Text>New Task</Text>
+      <Title ref={TitleRef} placeholder="Title" spellCheck={false} />
+      <Textarea ref={ContentRef} placeholder="Content" spellCheck={false} />
+      <AlignButton>
+        <BasicButton onClick={onhandleAdd}>ADD</BasicButton>
+      </AlignButton>
     </AddContainer>
   );
 };
-const AddContainer = styled.form`
-  padding: 1rem;
-  padding-bottom: 2rem;
-  border: 1px solid;
+export const AddContainer = styled.section`
+  border-top: 2px solid;
+  height: 14rem;
+  margin-right: 1rem;
+`;
+const Text = styled.header`
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: left;
+  padding: 0.5rem 0rem;
 `;
 
-export const Input = styled.input`
+const AlignButton = styled.div`
+  text-align: left;
+`;
+
+export const Input = styled.textarea`
   display: flex;
-  margin: auto;
-  text-align: center;
   border: none;
-  /* border-bottom: 1px solid; */
-  padding: 0.3rem;
-  margin-bottom: 1rem;
+  background: none;
   outline: none;
   width: 30rem;
+  font-family: sans-serif;
+  resize: none;
+  overflow: hidden;
+  padding: 0.2rem;
+  ::placeholder {
+    color: black;
+    font-family: sans-serif;
+  }
 `;
+
 export const Title = styled(Input)`
   font-size: 1rem;
   font-weight: bold;
+  height: 1.5rem;
 `;
 
-export const BasicBtn = styled.button`
+export const Textarea = styled(Input)`
+  padding: 1rem 0.5rem;
+  height: 4rem;
+`;
+export const BasicButton = styled.button`
   background: none;
   border: none;
   font-weight: bold;
