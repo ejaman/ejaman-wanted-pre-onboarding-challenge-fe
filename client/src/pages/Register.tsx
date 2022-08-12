@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onhandleRegister } from "../apis";
-import reg from "../vaildation";
+import reg from "../utils/vaildation";
 import {
-  BasicBtn,
+  BasicButton,
   Container,
   LoginInput,
   PText,
 } from "../components/styleComponents/LoginRegister";
+import { UserAPI } from "../apis/User";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -33,7 +33,7 @@ const Register = () => {
       email: email,
       password: pw,
     };
-    onhandleRegister(data);
+    UserAPI.register(data);
     navigate("/auth/login");
   };
   return (
@@ -64,9 +64,9 @@ const Register = () => {
             <p>올바른 이메일과 비밀번호 형식입니다.</p>
           )}
         </PText>
-        <BasicBtn onClick={onSubmitClick} disabled={error}>
+        <BasicButton onClick={onSubmitClick} disabled={error}>
           register
-        </BasicBtn>
+        </BasicButton>
       </div>
     </Container>
   );
