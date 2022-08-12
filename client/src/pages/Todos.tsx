@@ -8,7 +8,7 @@ import TodoList from "../components/TodoList";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
-  const [lists, setLists] = useState<ListType[]>([]);
+  const [list, setList] = useState<ListType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,14 +18,24 @@ const Todos = () => {
 
   useEffect(() => {
     ToDoAPI.getTodos(token).then((res) => {
-      setLists(res.data.data);
+      setList(res.data.data);
     });
-  }, [token]); // TODO: 렌더링 계속되는거같음
+  }, [token]);
+
+  const handleAddList = (todo: ListType) => {
+    const newList = [...list, todo];
+    setList(newList);
+  };
+
+  const handleDelete = (id: string) => {
+    const newList = [...list].filter((item) => item.id !== id);
+    setList(newList);
+  };
 
   return (
     <Container id="top">
       <Nav>
-        {lists.map((list, idx) => (
+        {list.map((list, idx) => (
           <Li key={idx}>
             <Link to={list.id} spy={true} smooth={true}>
               {list.title}
@@ -40,14 +50,23 @@ const Todos = () => {
       </Nav>
       <Content>
         <Title>WANTED PREONBOARDING CHALLENGE FE 1</Title>
-        <AddSection>
-          <AddTodo />
-        </AddSection>
-        <ListSection>
-          {lists.map((list, idx) => (
-            <TodoList list={list} key={idx} />
-          ))}
-        </ListSection>
+        <section>
+          <AddTodo handleAddList={(todo: ListType) => handleAddList(todo)} />
+        </section>
+        <section>
+          {list.map(
+            (list, idx) => (
+              console.log(list.title),
+              (
+                <TodoList
+                  list={list}
+                  key={idx}
+                  handleDelete={(id: string) => handleDelete(id)}
+                />
+              )
+            )
+          )}
+        </section>
       </Content>
     </Container>
   );
@@ -93,9 +112,5 @@ const Li = styled.li`
 const Content = styled.div`
   flex: 75%;
 `;
-const Section = styled.section``;
-const AddSection = styled(Section)``;
-const ListSection = styled(Section)`
-  /* background-color: yellow; */
-`;
+
 export default Todos;

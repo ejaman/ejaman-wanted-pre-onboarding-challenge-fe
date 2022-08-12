@@ -2,18 +2,21 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { ToDoAPI } from "../apis/ToDo";
 
-const AddTodo = () => {
+// TODO: type 해결하기
+const AddTodo = ({ handleAddList }: any) => {
   const token = localStorage.getItem("token") || "";
   const TitleRef = useRef<HTMLTextAreaElement>(null);
   const ContentRef = useRef<HTMLTextAreaElement>(null);
 
-  const onhandleAdd = (event: React.MouseEvent<HTMLElement>) => {
+  const onhandleAdd = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const todo = {
       title: TitleRef.current!.value,
       content: ContentRef.current!.value,
     };
-    ToDoAPI.create(token, todo);
+    await ToDoAPI.create(token, todo) //
+      .then((res) => handleAddList(res.data.data));
+
     TitleRef.current!.value = "";
     ContentRef.current!.value = "";
   };

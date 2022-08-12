@@ -34,7 +34,7 @@ export const ToDoAPI = {
     });
   },
 
-  create: (token: string, todo: TodoType) => {
+  create: async (token: string, todo: TodoType) => {
     return clientApi.post("/todos", todo, {
       headers: {
         Authorization: token,
