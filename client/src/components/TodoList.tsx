@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { idText } from "typescript";
-import { ToDoAPI, ListProps } from "../apis/ToDo";
+import { ToDoAPI, ListType } from "../apis/ToDo";
 import { BasicButton, Textarea, Title } from "./AddTodo";
 
-const TodoList = ({ list }: ListProps) => {
+const TodoList = ({
+  list,
+  handleDelete,
+}: {
+  list: ListType;
+  handleDelete: (id: string) => void;
+}) => {
   const token = localStorage.getItem("token") || "";
-  const [title, setTitle] = useState<string>(list.title);
-  const [content, setContent] = useState<string>(list.content);
+  const { title, content, id } = list;
+
+  const onhandleDelete = () => {
+    handleDelete(id);
+    ToDoAPI.del(id, token);
+  };
 
   return (
     <ListContainer>
       <ListTitle
         value={title}
         onChange={(event) => {
-          setTitle(event.currentTarget.value);
+          // setTitle(event.currentTarget.value);
         }}
         spellCheck={false}
         id={list.id}
@@ -22,7 +31,7 @@ const TodoList = ({ list }: ListProps) => {
       <Textarea
         value={content}
         onChange={(event) => {
-          setContent(event.currentTarget.value);
+          // setContent(event.currentTarget.value);
         }}
         spellCheck={false}
       />
@@ -34,14 +43,7 @@ const TodoList = ({ list }: ListProps) => {
         >
           Update
         </BasicButton>
-        <BasicButton
-          onClick={() => {
-            ToDoAPI.del(list.id, token);
-            // deleteTodo(list.id, `Bearer ${token}`);
-          }}
-        >
-          Delete
-        </BasicButton>
+        <BasicButton onClick={onhandleDelete}>Delete</BasicButton>
       </ButtonContainer>
     </ListContainer>
   );
@@ -53,6 +55,7 @@ const ListContainer = styled.section`
   text-align: left;
   height: 15rem;
   padding-top: 0.5rem;
+  width: 90%;
 `;
 
 const ListTitle = styled(Title)`
