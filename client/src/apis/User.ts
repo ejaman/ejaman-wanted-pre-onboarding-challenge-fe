@@ -1,12 +1,12 @@
 import clientApi from "./axios";
 
-export type IData = {
+export type UserInfoType = {
   email: string;
   password: string;
 };
 
 export const UserAPI = {
-  register: async (data: IData) => {
+  register: async (data: UserInfoType) => {
     try {
       await clientApi.post("/users/create", data);
     } catch (err) {
@@ -14,7 +14,7 @@ export const UserAPI = {
     }
   },
 
-  login: async (data: IData) => {
+  login: async (data: UserInfoType) => {
     await clientApi
       .post("/users/login", data)
       .then((res) => localStorage.setItem("token", res.data.token));
