@@ -33,6 +33,7 @@ export const AddContainer = styled.section`
   border-top: 2px solid;
   height: 14rem;
   margin-right: 1rem;
+  width: 90%;
 `;
 const Text = styled.header`
   font-weight: 600;

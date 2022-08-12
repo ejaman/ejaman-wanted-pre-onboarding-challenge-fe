@@ -53,6 +53,7 @@ const Todos = () => {
   );
 };
 const Container = styled.div`
+  width: 70%;
   margin: auto;
   text-align: center;
   display: flex;
@@ -69,7 +70,7 @@ const Nav = styled.nav`
   flex: 25%;
   text-align: left;
   font-size: 1.2rem;
-  padding: 1.5rem;
+  padding: 1rem;
 `;
 
 const TopButton = styled.p`
@@ -94,5 +95,7 @@ const Content = styled.div`
 `;
 const Section = styled.section``;
 const AddSection = styled(Section)``;
-const ListSection = styled(Section)``;
+const ListSection = styled(Section)`
+  /* background-color: yellow; */
+`;
 export default Todos;

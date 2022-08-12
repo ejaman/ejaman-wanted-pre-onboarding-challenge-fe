@@ -53,6 +53,7 @@ const ListContainer = styled.section`
   text-align: left;
   height: 15rem;
   padding-top: 0.5rem;
+  width: 90%;
 `;
 
 const ListTitle = styled(Title)`
