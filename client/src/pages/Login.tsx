@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserAPI } from "../apis/User";
 import reg from "../utils/vaildation";
+
 import {
   BasicButton,
   Container,
