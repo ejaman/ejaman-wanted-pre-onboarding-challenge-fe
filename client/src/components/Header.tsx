@@ -19,7 +19,7 @@ const Header = () => {
 };
 const HeaderContainer = styled.header`
   display: flex;
-  padding: 1rem 5rem 5rem;
+  padding: 1rem 5rem 2rem;
   align-items: center;
 `;
 const LogoutButton = styled.button`
