@@ -43,13 +43,11 @@ export const ToDoAPI = {
   },
 
   update: async (id: string, token: string, todo: TodoType) => {
-    return await clientApi
-      .put(`todos/${id}`, todo, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => console.log(res.data));
+    return await clientApi.put(`todos/${id}`, todo, {
+      headers: {
+        Authorization: token,
+      },
+    });
   },
 
   del: async (id: string, token: string) => {

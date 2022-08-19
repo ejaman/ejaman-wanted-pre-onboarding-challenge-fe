@@ -63,6 +63,9 @@ export const Input = styled.textarea`
     color: black;
     font-family: sans-serif;
   }
+  &:disabled {
+    color: black;
+  }
 `;
 
 export const Title = styled(Input)`
@@ -73,6 +76,7 @@ export const Title = styled(Input)`
 
 export const Textarea = styled(Input)`
   padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
   height: 4rem;
 `;
 export const BasicButton = styled.button`

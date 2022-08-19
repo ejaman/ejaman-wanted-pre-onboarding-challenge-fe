@@ -32,6 +32,12 @@ const Todos = () => {
     setList(newList);
   };
 
+  const handleUpdate = (todo: ListType) => {
+    const newList = [...list];
+    newList[Number(todo.id)] = todo;
+    setList(newList);
+  };
+
   return (
     <Container id="top">
       <Nav>
@@ -49,23 +55,19 @@ const Todos = () => {
         </TopButton>
       </Nav>
       <Content>
-        <Title>WANTED PREONBOARDING CHALLENGE FE 1</Title>
+        <Title>WANTED PREONBOARDING CHALLENGE</Title>
         <section>
           <AddTodo handleAddList={(todo: ListType) => handleAddList(todo)} />
         </section>
         <section>
-          {list.map(
-            (list, idx) => (
-              console.log(list.title),
-              (
-                <TodoList
-                  list={list}
-                  key={idx}
-                  handleDelete={(id: string) => handleDelete(id)}
-                />
-              )
-            )
-          )}
+          {list.map((list, idx) => (
+            <TodoList
+              list={list}
+              key={idx}
+              handleDelete={(id: string) => handleDelete(id)}
+              handleUpdate={(todo: ListType) => handleUpdate(todo)}
+            />
+          ))}
         </section>
       </Content>
     </Container>
