@@ -51,12 +51,11 @@ export const ToDoAPI = {
   },
 
   del: async (id: string, token: string) => {
-    return await clientApi
-      .delete(`/todos/${id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => console.log(res.data));
+    return await clientApi.delete(`/todos/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    // .then((res) => console.log(res.data));
   },
 };
