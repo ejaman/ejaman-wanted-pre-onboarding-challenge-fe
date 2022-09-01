@@ -1,12 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { ToDoAPI } from "../apis/ToDo";
+import SimpleSnackbar from "./SimpleSnackbar";
 
 // TODO: type 해결하기
 const AddTodo = ({ handleAddList }: any) => {
   const token = localStorage.getItem("token") || "";
   const TitleRef = useRef<HTMLTextAreaElement>(null);
   const ContentRef = useRef<HTMLTextAreaElement>(null);
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const [option, setOption] = useState<string>();
 
   const onhandleAdd = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -14,11 +17,18 @@ const AddTodo = ({ handleAddList }: any) => {
       title: TitleRef.current!.value,
       content: ContentRef.current!.value,
     };
-    await ToDoAPI.create(token, todo) //
-      .then((res) => handleAddList(res.data.data));
+
+    try {
+      await ToDoAPI.create(token, todo) //
+        .then((res) => handleAddList(res.data.data));
+      setOption("success"); // success alert
+    } catch (err) {
+      setOption("fail"); // error alert
+    }
 
     TitleRef.current!.value = "";
     ContentRef.current!.value = "";
+    setIsAlertOpen(true);
   };
 
   return (
@@ -29,9 +39,17 @@ const AddTodo = ({ handleAddList }: any) => {
       <AlignButton>
         <BasicButton onClick={onhandleAdd}>ADD</BasicButton>
       </AlignButton>
+      {isAlertOpen && (
+        <SimpleSnackbar
+          option={option}
+          isAlertOpen={isAlertOpen}
+          setIsAlertOpen={setIsAlertOpen}
+        />
+      )}
     </AddContainer>
   );
 };
+
 export const AddContainer = styled.section`
   border-top: 2px solid;
   height: 14rem;
@@ -83,6 +101,7 @@ export const BasicButton = styled.button`
   background: none;
   border: none;
   font-weight: bold;
+  cursor: pointer;
   &:hover {
     opacity: 0.6;
   }

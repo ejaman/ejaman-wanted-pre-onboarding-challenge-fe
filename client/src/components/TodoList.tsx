@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ToDoAPI, ListType } from "../apis/ToDo";
 import { BasicButton, Textarea, Title } from "./AddTodo";
+import AlertDialog from "./AlertDialog";
+import SimpleSnackbar from "./SimpleSnackbar";
 
 const TodoList = ({
   list,
+  id,
   handleDelete,
   handleUpdate,
 }: {
   list: ListType;
+  id: string;
   handleDelete: (id: string) => void;
   handleUpdate: (todo: ListType) => void;
 }) => {
   const [title, setTitle] = useState(list.title);
   const [content, setContent] = useState(list.content);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const [option, setOption] = useState<string>();
 
   const token = localStorage.getItem("token") || "";
 
@@ -27,24 +34,33 @@ const TodoList = ({
     setIsDisabled(!isDisabled);
   };
 
-  const onhandleUpdate = () => {
+  const onhandleUpdate = async () => {
     onhandleDisabled();
     const todo = {
       ...list,
       title,
       content,
     };
-    !isDisabled && handleUpdate(todo);
-    ToDoAPI.update(list.id, token, todo).then((res) => handleUpdate(res.data));
+    if (!isDisabled) {
+      handleUpdate(todo);
+      try {
+        await ToDoAPI.update(list.id, token, todo).then((res) => {
+          handleUpdate(res.data);
+          setOption("update"); // success alert
+          setIsAlertOpen(true);
+        });
+      } catch (err) {
+        setOption("fail"); // error alert
+      }
+    }
   };
 
-  const onhandleDelete = () => {
-    handleDelete(list.id);
-    ToDoAPI.del(list.id, token);
+  const onhandleClick = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <ListContainer>
+    <ListContainer id={id}>
       <ListTitle
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -61,8 +77,20 @@ const TodoList = ({
         <BasicButton onClick={onhandleUpdate}>
           {isDisabled ? "Update" : "Activated"}
         </BasicButton>
-        <BasicButton onClick={onhandleDelete}>Delete</BasicButton>
+        <BasicButton onClick={onhandleClick}>Delete</BasicButton>
+        <AlertDialog
+          list={list.id}
+          token={token}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          handleDelete={handleDelete}
+        />
       </ButtonContainer>
+      <SimpleSnackbar
+        option={option}
+        isAlertOpen={isAlertOpen}
+        setIsAlertOpen={setIsAlertOpen}
+      />
     </ListContainer>
   );
 };

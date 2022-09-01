@@ -64,6 +64,7 @@ const Todos = () => {
             <TodoList
               list={list}
               key={idx}
+              id={list.id}
               handleDelete={(id: string) => handleDelete(id)}
               handleUpdate={(todo: ListType) => handleUpdate(todo)}
             />
@@ -92,6 +93,7 @@ const Nav = styled.nav`
   text-align: left;
   font-size: 1.2rem;
   padding: 1rem;
+  cursor: pointer;
 `;
 
 const TopButton = styled.p`
