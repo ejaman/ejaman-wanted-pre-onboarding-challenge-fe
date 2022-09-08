@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAPI } from "../apis/User";
+import useAuthQuery from "../hooks/useAuthQuery";
 import reg from "../utils/vaildation";
-
 import {
   BasicButton,
   Container,
@@ -11,6 +10,7 @@ import {
 } from "../components/styleComponents/LoginRegister";
 
 const Login = () => {
+  const { login } = useAuthQuery();
   const [email, setEmail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const Login = () => {
       email: email,
       password: pw,
     };
-    UserAPI.login(data);
+    login(data); // 로그인 통신
     setToken(localStorage.getItem("token")); // TODO: 작동하는데 너무 느림
   };
 
