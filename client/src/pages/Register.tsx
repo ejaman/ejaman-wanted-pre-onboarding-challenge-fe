@@ -7,9 +7,10 @@ import {
   LoginInput,
   PText,
 } from "../components/styleComponents/LoginRegister";
-import { UserAPI } from "../apis/User";
+import useAuthQuery from "../hooks/useAuthQuery";
 
 const Register = () => {
+  const { register } = useAuthQuery();
   const [email, setEmail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
@@ -33,8 +34,7 @@ const Register = () => {
       email: email,
       password: pw,
     };
-    UserAPI.register(data);
-    navigate("/auth/login");
+    register(data);
   };
   return (
     <Container>
