@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ToDoAPI, ListType } from "../apis/ToDo";
+import { ToDoAPI, IList } from "../apis/ToDo";
 import { BasicButton, Textarea, Title } from "./AddTodo";
 import AlertDialog from "./AlertDialog";
 import SimpleSnackbar from "./SimpleSnackbar";
@@ -11,10 +11,10 @@ const TodoList = ({
   handleDelete,
   handleUpdate,
 }: {
-  list: ListType;
+  list: IList;
   id: string;
   handleDelete: (id: string) => void;
-  handleUpdate: (todo: ListType) => void;
+  handleUpdate: (todo: IList) => void;
 }) => {
   const [title, setTitle] = useState(list.title);
   const [content, setContent] = useState(list.content);
@@ -102,6 +102,9 @@ const ListContainer = styled.section`
   height: 15rem;
   padding-top: 0.5rem;
   width: 90%;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+  }
 `;
 
 const ListTitle = styled(Title)`

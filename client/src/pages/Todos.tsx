@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import styled from "styled-components";
-import { ToDoAPI, ListType } from "../apis/ToDo";
+import { ToDoAPI, IList } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
-  const [list, setList] = useState<ListType[]>([]);
+  const [list, setList] = useState<IList[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,10 +19,11 @@ const Todos = () => {
   useEffect(() => {
     ToDoAPI.getTodos(token).then((res) => {
       setList(res.data.data);
+      return res.data.data;
     });
   }, [token]);
 
-  const handleAddList = (todo: ListType) => {
+  const handleAddList = (todo: IList) => {
     const newList = [...list, todo];
     setList(newList);
   };
@@ -32,7 +33,7 @@ const Todos = () => {
     setList(newList);
   };
 
-  const handleUpdate = (todo: ListType) => {
+  const handleUpdate = (todo: IList) => {
     const newList = [...list];
     newList[Number(todo.id)] = todo;
     setList(newList);
@@ -57,7 +58,7 @@ const Todos = () => {
       <Content>
         <Title>WANTED PREONBOARDING CHALLENGE</Title>
         <section>
-          <AddTodo handleAddList={(todo: ListType) => handleAddList(todo)} />
+          <AddTodo handleAddList={(todo: IList) => handleAddList(todo)} />
         </section>
         <section>
           {list.map((list, idx) => (
@@ -66,7 +67,7 @@ const Todos = () => {
               key={idx}
               id={list.id}
               handleDelete={(id: string) => handleDelete(id)}
-              handleUpdate={(todo: ListType) => handleUpdate(todo)}
+              handleUpdate={(todo: IList) => handleUpdate(todo)}
             />
           ))}
         </section>
@@ -79,13 +80,21 @@ const Container = styled.div`
   margin: auto;
   text-align: center;
   display: flex;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const Title = styled.header`
-  width: 60%;
+  flex: 60%;
   font-weight: 800;
   font-size: 4rem;
   text-align: left;
+  @media screen and (max-width: 62.5rem) {
+    font-size: 3rem;
+    flex: 1;
+  }
 `;
 
 const Nav = styled.nav`
@@ -94,6 +103,9 @@ const Nav = styled.nav`
   font-size: 1.2rem;
   padding: 1rem;
   cursor: pointer;
+  @media screen and (max-width: 62.5rem) {
+    display: none;
+  }
 `;
 
 const TopButton = styled.p`
@@ -108,13 +120,19 @@ const TopButton = styled.p`
     opacity: 0.5;
   }
 `;
-
+const Content = styled.div`
+  flex: 75%;
+  @media screen and (max-width: 62.5rem) {
+    flex: 1;
+    width: 100%;
+  }
+`;
 const Li = styled.li`
   list-style: none;
   font-weight: 500;
-`;
-const Content = styled.div`
-  flex: 75%;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+  }
 `;
 
 export default Todos;
