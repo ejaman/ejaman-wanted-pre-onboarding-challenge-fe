@@ -4,7 +4,7 @@
 
 ## Demo
 
-링크:
+링크: https://wanted-pre-onboarding-challenge-fe-1-silk.vercel.app/
 
 ## 사용 스택
 
@@ -37,8 +37,16 @@ react, typescript, redux-toolkit, styled-components
 
 ## 1st refectoring
 
+- [x] 관심사 분리
+- [x] UI 수정
+      Todo 수정 버튼을 클릭하면 수정 모드를 활성화하고
+      수정 내용을 제출하거나 취소할 수 있습니다.
+
 ## 2nd refectoring
+
+- [x] 수정/ 삭제/ 제출에 대한 확인 처리 추가
+- [x] react-query 적용(login, register)
 
 ## 3rd refectoring
 
-## last refectoring
+- [ ] react-query todo에 적용
