@@ -1,21 +1,19 @@
 import clientApi from "./axios";
 
-export type TodoType = {
+export interface ITodo {
   title: string;
   content: string;
-};
-
-export type ListType = {
+}
+export interface IList {
   content: string;
   createdAt: string;
   id: string;
   title: string;
   updatedAt: string;
-};
-
-export type ListProps = {
-  list: ListType;
-};
+}
+export interface ListProps {
+  list: IList;
+}
 
 export const ToDoAPI = {
   getTodos: (token: string) => {
@@ -34,7 +32,7 @@ export const ToDoAPI = {
     });
   },
 
-  create: async (token: string, todo: TodoType) => {
+  create: async (token: string, todo: ITodo) => {
     return clientApi.post("/todos", todo, {
       headers: {
         Authorization: token,
@@ -42,7 +40,7 @@ export const ToDoAPI = {
     });
   },
 
-  update: async (id: string, token: string, todo: TodoType) => {
+  update: async (id: string, token: string, todo: ITodo) => {
     return await clientApi.put(`todos/${id}`, todo, {
       headers: {
         Authorization: token,

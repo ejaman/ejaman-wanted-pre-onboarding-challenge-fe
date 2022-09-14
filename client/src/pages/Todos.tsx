@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import styled from "styled-components";
-import { ToDoAPI, ListType } from "../apis/ToDo";
+import { ToDoAPI, IList } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
-  const [list, setList] = useState<ListType[]>([]);
+  const [list, setList] = useState<IList[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Todos = () => {
     });
   }, [token]);
 
-  const handleAddList = (todo: ListType) => {
+  const handleAddList = (todo: IList) => {
     const newList = [...list, todo];
     setList(newList);
   };
@@ -32,7 +32,7 @@ const Todos = () => {
     setList(newList);
   };
 
-  const handleUpdate = (todo: ListType) => {
+  const handleUpdate = (todo: IList) => {
     const newList = [...list];
     newList[Number(todo.id)] = todo;
     setList(newList);
@@ -57,7 +57,7 @@ const Todos = () => {
       <Content>
         <Title>WANTED PREONBOARDING CHALLENGE</Title>
         <section>
-          <AddTodo handleAddList={(todo: ListType) => handleAddList(todo)} />
+          <AddTodo handleAddList={(todo: IList) => handleAddList(todo)} />
         </section>
         <section>
           {list.map((list, idx) => (
@@ -66,7 +66,7 @@ const Todos = () => {
               key={idx}
               id={list.id}
               handleDelete={(id: string) => handleDelete(id)}
-              handleUpdate={(todo: ListType) => handleUpdate(todo)}
+              handleUpdate={(todo: IList) => handleUpdate(todo)}
             />
           ))}
         </section>
