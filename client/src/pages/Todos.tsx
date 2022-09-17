@@ -19,6 +19,7 @@ const Todos = () => {
   useEffect(() => {
     ToDoAPI.getTodos(token).then((res) => {
       setList(res.data.data);
+      return res.data.data;
     });
   }, [token]);
 
@@ -79,13 +80,21 @@ const Container = styled.div`
   margin: auto;
   text-align: center;
   display: flex;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const Title = styled.header`
-  width: 60%;
+  flex: 60%;
   font-weight: 800;
   font-size: 4rem;
   text-align: left;
+  @media screen and (max-width: 62.5rem) {
+    font-size: 3rem;
+    flex: 1;
+  }
 `;
 
 const Nav = styled.nav`
@@ -94,6 +103,9 @@ const Nav = styled.nav`
   font-size: 1.2rem;
   padding: 1rem;
   cursor: pointer;
+  @media screen and (max-width: 62.5rem) {
+    display: none;
+  }
 `;
 
 const TopButton = styled.p`
@@ -108,13 +120,19 @@ const TopButton = styled.p`
     opacity: 0.5;
   }
 `;
-
+const Content = styled.div`
+  flex: 75%;
+  @media screen and (max-width: 62.5rem) {
+    flex: 1;
+    width: 100%;
+  }
+`;
 const Li = styled.li`
   list-style: none;
   font-weight: 500;
-`;
-const Content = styled.div`
-  flex: 75%;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+  }
 `;
 
 export default Todos;

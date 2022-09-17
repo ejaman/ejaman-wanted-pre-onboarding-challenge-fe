@@ -21,6 +21,10 @@ const HeaderContainer = styled.header`
   display: flex;
   padding: 1rem 5rem 2rem;
   align-items: center;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+    padding-right: 0.5rem;
+  }
 `;
 const LogoutButton = styled.button`
   margin-left: auto;

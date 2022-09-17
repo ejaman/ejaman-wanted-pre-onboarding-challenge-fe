@@ -102,6 +102,9 @@ const ListContainer = styled.section`
   height: 15rem;
   padding-top: 0.5rem;
   width: 90%;
+  @media screen and (max-width: 62.5rem) {
+    width: 100%;
+  }
 `;
 
 const ListTitle = styled(Title)`
