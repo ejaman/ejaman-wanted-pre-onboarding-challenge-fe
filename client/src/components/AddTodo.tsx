@@ -11,8 +11,8 @@ const AddTodo = ({
 }: {
   handleAddList: (todo: IList) => void;
 }) => {
-  const { create } = useTodoQuery();
-  const { mutateAsync, isLoading } = create;
+  // const { create } = useTodoQuery();
+  // const { mutateAsync, isLoading } = create;
 
   const token = localStorage.getItem("token") || "";
   console.log(token);
@@ -30,9 +30,9 @@ const AddTodo = ({
     };
 
     try {
-      mutateAsync(todo).then((res) => handleAddList(res.data.data));
-      // await ToDoAPI.create(token, todo) //
-      //   .then((res) => handleAddList(res.data.data));
+      // mutateAsync(todo).then((res) => handleAddList(res.data.data));
+      await ToDoAPI.create(token, todo) //
+        .then((res) => handleAddList(res.data.data));
       setOption("success"); // success alert
     } catch (err) {
       setOption("fail"); // error alert
