@@ -12,13 +12,18 @@
 3. 나쁜 습관을 파악하고 없애보자!
 4. clean code
 
+
 ### 작업 기간
 : 2022-08-01 - 2022-08-19
 
  
 ### Demo
 링크: 
-(백엔드는 배포 미완료 🥲)
+(백엔드는 배포 미완료 🥲) <br>
+<img width="800" alt="스크린샷 2022-09-18 오전 1 05 47" src="https://user-images.githubusercontent.com/82802784/190865990-356c86b0-e48f-4563-ab98-95d1c828bf9c.png">
+<img width="800" alt="스크린샷 2022-09-18 오전 1 06 04" src="https://user-images.githubusercontent.com/82802784/190866072-ade33d0e-7b6a-44f8-a014-d815a9722902.png">
+<img width="800" alt="스크린샷 2022-09-18 오전 1 08 01" src="https://user-images.githubusercontent.com/82802784/190866061-ca872102-baf3-4038-ab19-677005434b55.png">
+
 ```
 아이디 : pppp@ppp.com
 비밀번호 : abc123!!!
@@ -128,6 +133,11 @@
 ➡️ API 호출 로직을 view 로직과 분리하는 것만으로 어느 정도 관심사 분리를 달성할 수 있음
 
 ### 2. 사용자에게 편리한 UI
+- 반응형 UI
+
+https://user-images.githubusercontent.com/82802784/190865952-04b9dd35-5254-46e3-8ae3-8cda12709b67.mov
+
+- todo 수정 <br>
 기존 <br>
 todo를 수정하고 수정 버튼을 누르면 수정 완료 <br>
 👇 <br>
