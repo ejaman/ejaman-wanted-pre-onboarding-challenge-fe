@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query"; //1
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
@@ -5,23 +6,28 @@ import styled from "styled-components";
 import { ToDoAPI, IList } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
+import { AxiosError } from "axios";
+import { useGetTodos } from "../hooks/useTodoQuery";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
-  const [list, setList] = useState<IList[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // 로그인이 되어있다면 바로 리다이렉트되도록
     !token && navigate("/auth/login");
-  }, [token, navigate]); // TODO: navigate를 Deps으로..?
+  }, [token, navigate]);
 
-  useEffect(() => {
-    ToDoAPI.getTodos(token).then((res) => {
-      setList(res.data.data);
-      return res.data.data;
-    });
-  }, [token]);
+  const { isLoading, data, isError } = useGetTodos(token);
+  const [list, setList] = useState<IList[]>([]);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (isError) {
+    return <h2>error occur</h2>;
+  }
 
   const handleAddList = (todo: IList) => {
     const newList = [...list, todo];
@@ -42,7 +48,7 @@ const Todos = () => {
   return (
     <Container id="top">
       <Nav>
-        {list.map((list, idx) => (
+        {data?.data.map((list: IList, idx: number) => (
           <Li key={idx}>
             <Link to={list.id} spy={true} smooth={true}>
               {list.title}
@@ -61,15 +67,19 @@ const Todos = () => {
           <AddTodo handleAddList={(todo: IList) => handleAddList(todo)} />
         </section>
         <section>
-          {list.map((list, idx) => (
-            <TodoList
-              list={list}
-              key={idx}
-              id={list.id}
-              handleDelete={(id: string) => handleDelete(id)}
-              handleUpdate={(todo: IList) => handleUpdate(todo)}
-            />
-          ))}
+          {data ? (
+            data?.data.map((list: IList, idx: number) => (
+              <TodoList
+                list={list}
+                key={idx}
+                id={list.id}
+                handleDelete={(id: string) => handleDelete(id)}
+                handleUpdate={(todo: IList) => handleUpdate(todo)}
+              />
+            ))
+          ) : (
+            <div>todo가 없습니다!</div>
+          )}
         </section>
       </Content>
     </Container>
