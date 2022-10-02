@@ -1,21 +1,16 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { IList, ToDoAPI } from "../apis/ToDo";
-import useTodoQuery from "../hooks/useTodoQuery";
+import { useCreateTodo } from "../hooks/useTodoQuery";
 import SimpleSnackbar from "./SimpleSnackbar";
 
 // TODO: type 해결하기
 
-const AddTodo = ({
-  handleAddList,
-}: {
-  handleAddList: (todo: IList) => void;
-}) => {
-  // const { create } = useTodoQuery();
-  // const { mutateAsync, isLoading } = create;
-
+const AddTodo = () => {
   const token = localStorage.getItem("token") || "";
-  console.log(token);
+  const create = useCreateTodo(token);
+  const { mutateAsync, isLoading } = create;
+
+  console.log(mutateAsync, isLoading);
 
   const TitleRef = useRef<HTMLTextAreaElement>(null);
   const ContentRef = useRef<HTMLTextAreaElement>(null);
@@ -30,9 +25,7 @@ const AddTodo = ({
     };
 
     try {
-      // mutateAsync(todo).then((res) => handleAddList(res.data.data));
-      await ToDoAPI.create(token, todo) //
-        .then((res) => handleAddList(res.data.data));
+      await mutateAsync(todo);
       setOption("success"); // success alert
     } catch (err) {
       setOption("fail"); // error alert

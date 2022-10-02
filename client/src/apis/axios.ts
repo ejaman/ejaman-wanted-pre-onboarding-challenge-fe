@@ -19,7 +19,6 @@ clientApi.interceptors.response.use(
 clientApi.interceptors.response.use(
   (config) => {
     const token = localStorage.getItem("token");
-    console.log(token);
 
     if (!token) throw Error("no token");
     return config;

@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ToDoAPI, IList } from "../apis/ToDo";
+import { IList } from "../apis/ToDo";
+import { useUpdateToDo } from "../hooks/useTodoQuery";
 import { BasicButton, Textarea, Title } from "./AddTodo";
 import AlertDialog from "./AlertDialog";
 import SimpleSnackbar from "./SimpleSnackbar";
 
-const TodoList = ({
-  list,
-  id,
-  handleDelete,
-  handleUpdate,
-}: {
-  list: IList;
-  id: string;
-  handleDelete: (id: string) => void;
-  handleUpdate: (todo: IList) => void;
-}) => {
+const TodoList = ({ list, id }: { list: IList; id: string }) => {
   const [title, setTitle] = useState(list.title);
   const [content, setContent] = useState(list.content);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -24,6 +15,8 @@ const TodoList = ({
   const [option, setOption] = useState<string>();
 
   const token = localStorage.getItem("token") || "";
+  const update = useUpdateToDo(id, token);
+  const { mutateAsync, isLoading } = update;
 
   useEffect(() => {
     setTitle(list.title);
@@ -42,13 +35,10 @@ const TodoList = ({
       content,
     };
     if (!isDisabled) {
-      handleUpdate(todo);
       try {
-        await ToDoAPI.update(list.id, token, todo).then((res) => {
-          handleUpdate(res.data);
-          setOption("update"); // success alert
-          setIsAlertOpen(true);
-        });
+        await mutateAsync(todo);
+        setOption("update"); // success alert
+        setIsAlertOpen(true);
       } catch (err) {
         setOption("fail"); // error alert
       }
@@ -83,7 +73,6 @@ const TodoList = ({
           token={token}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          handleDelete={handleDelete}
         />
       </ButtonContainer>
       <SimpleSnackbar

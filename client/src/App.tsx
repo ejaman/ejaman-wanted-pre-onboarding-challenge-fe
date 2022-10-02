@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Todos from "./pages/Todos";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액트 쿼리의 개발도구
+
 const querClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,7 +25,6 @@ function App() {
   return (
     <React.StrictMode>
       <QueryClientProvider client={querClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -35,6 +35,8 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        {/* 디퐅트로 열리지 않게 하기 위해서 */}
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </React.StrictMode>
   );

@@ -5,11 +5,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { ToDoAPI } from "../apis/ToDo";
-import SimpleSnackbar from "./SimpleSnackbar";
+
+import { useDeleteToDo } from "../hooks/useTodoQuery";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -23,26 +21,20 @@ interface IisOpen {
   token: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  handleDelete: (id: string) => void;
 }
 
-const AlertDialog = ({
-  list,
-  token,
-  isOpen,
-  setIsOpen,
-  handleDelete,
-}: IisOpen) => {
+const AlertDialog = ({ list, token, isOpen, setIsOpen }: IisOpen) => {
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const del = useDeleteToDo(list, token);
+  const { mutateAsync, isLoading } = del;
 
   const handleClose = () => {
     setIsOpen(!isOpen);
   };
 
-  const onhandleDelete = () => {
+  const onhandleDelete = async () => {
     setIsOpen(!isOpen); // dialog state
-    handleDelete(list);
-    ToDoAPI.del(list, token);
+    await mutateAsync();
   };
 
   return (

@@ -1,25 +1,21 @@
-import { useQuery } from "@tanstack/react-query"; //1
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import styled from "styled-components";
-import { ToDoAPI, IList } from "../apis/ToDo";
+import { IList } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
-import { AxiosError } from "axios";
 import { useGetTodos } from "../hooks/useTodoQuery";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
   const navigate = useNavigate();
+  const { isLoading, data, isError } = useGetTodos(token);
 
   useEffect(() => {
     // 로그인이 되어있다면 바로 리다이렉트되도록
     !token && navigate("/auth/login");
   }, [token, navigate]);
-
-  const { isLoading, data, isError } = useGetTodos(token);
-  const [list, setList] = useState<IList[]>([]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -28,22 +24,6 @@ const Todos = () => {
   if (isError) {
     return <h2>error occur</h2>;
   }
-
-  const handleAddList = (todo: IList) => {
-    const newList = [...list, todo];
-    setList(newList);
-  };
-
-  const handleDelete = (id: string) => {
-    const newList = [...list].filter((item) => item.id !== id);
-    setList(newList);
-  };
-
-  const handleUpdate = (todo: IList) => {
-    const newList = [...list];
-    newList[Number(todo.id)] = todo;
-    setList(newList);
-  };
 
   return (
     <Container id="top">
@@ -64,18 +44,12 @@ const Todos = () => {
       <Content>
         <Title>WANTED PREONBOARDING CHALLENGE</Title>
         <section>
-          <AddTodo handleAddList={(todo: IList) => handleAddList(todo)} />
+          <AddTodo />
         </section>
         <section>
           {data ? (
             data?.data.map((list: IList, idx: number) => (
-              <TodoList
-                list={list}
-                key={idx}
-                id={list.id}
-                handleDelete={(id: string) => handleDelete(id)}
-                handleUpdate={(todo: IList) => handleUpdate(todo)}
-              />
+              <TodoList list={list} key={idx} id={list.id} />
             ))
           ) : (
             <div>todo가 없습니다!</div>
@@ -85,6 +59,7 @@ const Todos = () => {
     </Container>
   );
 };
+
 const Container = styled.div`
   width: 70%;
   margin: auto;
