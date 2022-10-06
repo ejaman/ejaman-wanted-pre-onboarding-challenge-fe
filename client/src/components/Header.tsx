@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserAPI } from "../apis/Auth";
+import { useResetRecoilState } from "recoil";
+import { tokenState } from "../state/tokenState";
 
 const Header = () => {
   const navigate = useNavigate();
+  const TokenResetState = useResetRecoilState(tokenState);
   const token = localStorage.getItem("token");
 
   const onLogoutClick = () => {
     UserAPI.logout();
+    TokenResetState();
     navigate("/");
   };
   return (

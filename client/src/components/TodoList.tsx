@@ -14,8 +14,7 @@ const TodoList = ({ list, id }: { list: IList; id: string }) => {
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
   const [option, setOption] = useState<string>();
 
-  const token = localStorage.getItem("token") || "";
-  const update = useUpdateToDo(id, token);
+  const update = useUpdateToDo(id);
   const { mutateAsync, isLoading } = update;
 
   useEffect(() => {
@@ -68,12 +67,7 @@ const TodoList = ({ list, id }: { list: IList; id: string }) => {
           {isDisabled ? "Update" : "Activated"}
         </BasicButton>
         <BasicButton onClick={onhandleClick}>Delete</BasicButton>
-        <AlertDialog
-          list={list.id}
-          token={token}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
+        <AlertDialog list={list.id} isOpen={isOpen} setIsOpen={setIsOpen} />
       </ButtonContainer>
       <SimpleSnackbar
         option={option}

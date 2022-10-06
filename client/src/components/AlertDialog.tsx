@@ -18,14 +18,13 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 interface IisOpen {
   list: string;
-  token: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const AlertDialog = ({ list, token, isOpen, setIsOpen }: IisOpen) => {
+const AlertDialog = ({ list, isOpen, setIsOpen }: IisOpen) => {
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
-  const del = useDeleteToDo(list, token);
+  const del = useDeleteToDo(list);
   const { mutateAsync, isLoading } = del;
 
   const handleClose = () => {

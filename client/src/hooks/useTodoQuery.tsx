@@ -10,7 +10,7 @@ const Keys = {
 export const useGetTodos = (token: string) => {
   const { isLoading, data, isError } = useQuery(
     Keys.all,
-    () => ToDoAPI.getTodos(token).then((res) => res.data),
+    () => ToDoAPI.getTodos().then((res) => res.data),
     {
       onSuccess: () => {},
     }
@@ -18,9 +18,9 @@ export const useGetTodos = (token: string) => {
   return { isLoading, data, isError };
 };
 
-export function useCreateTodo(token: string) {
+export function useCreateTodo() {
   const queryClient = useQueryClient();
-  return useMutation((todo: ITodo) => ToDoAPI.create(token, todo), {
+  return useMutation((todo: ITodo) => ToDoAPI.create(todo), {
     onSuccess: () => {
       // invaildate queries: queryKey의 유효성을 제거해주는 목적으로 사용
       // -> 왜 제거? 서버로부터 데이터를 다시 조회해오기 위해
@@ -29,16 +29,16 @@ export function useCreateTodo(token: string) {
   });
 }
 
-export function useUpdateToDo(id: string, token: string) {
+export function useUpdateToDo(id: string) {
   const queryClient = useQueryClient();
-  return useMutation((todo: ITodo) => ToDoAPI.update(id, token, todo), {
+  return useMutation((todo: ITodo) => ToDoAPI.update(id, todo), {
     onSuccess: () => queryClient.invalidateQueries(Keys.all),
   });
 }
 
-export function useDeleteToDo(id: string, token: string) {
+export function useDeleteToDo(id: string) {
   const queryClient = useQueryClient();
-  return useMutation(() => ToDoAPI.del(id, token), {
+  return useMutation(() => ToDoAPI.del(id), {
     onSuccess: () => queryClient.invalidateQueries(Keys.all),
   });
 }

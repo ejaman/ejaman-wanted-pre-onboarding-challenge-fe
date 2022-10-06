@@ -1,10 +1,15 @@
 import axios from "axios";
 const API_URL = "http://localhost:8080";
+const token = localStorage.getItem("token") || "";
 
 const clientApi = axios.create({
   baseURL: API_URL,
+  headers: {
+    Authorization: token,
+  },
 });
 
+//  request / response 에 선행,후행 처리를 커스텀하게
 clientApi.interceptors.response.use(
   (res) => {
     const { token } = res.data;

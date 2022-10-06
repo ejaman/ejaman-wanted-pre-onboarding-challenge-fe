@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Todos from "./pages/Todos";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액트 쿼리의 개발도구
+import { RecoilRoot } from "recoil";
 
 const querClient = new QueryClient({
   defaultOptions: {
@@ -25,16 +26,18 @@ function App() {
   return (
     <React.StrictMode>
       <QueryClientProvider client={querClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/register" element={<Register />} />
-            <Route element={<Layout />}>
-              <Route path="/todo" element={<Todos />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <RecoilRoot>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/register" element={<Register />} />
+              <Route element={<Layout />}>
+                <Route path="/todo" element={<Todos />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </RecoilRoot>
         {/* 디퐅트로 열리지 않게 하기 위해서 */}
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>

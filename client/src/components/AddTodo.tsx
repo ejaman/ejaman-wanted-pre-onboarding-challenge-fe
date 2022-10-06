@@ -6,8 +6,7 @@ import SimpleSnackbar from "./SimpleSnackbar";
 // TODO: type 해결하기
 
 const AddTodo = () => {
-  const token = localStorage.getItem("token") || "";
-  const create = useCreateTodo(token);
+  const create = useCreateTodo();
   const { mutateAsync, isLoading } = create;
 
   console.log(mutateAsync, isLoading);

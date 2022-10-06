@@ -16,44 +16,24 @@ export interface ListProps {
 }
 
 export const ToDoAPI = {
-  getTodos: (token: string) => {
-    return clientApi.get("/todos", {
-      headers: {
-        Authorization: token,
-      },
-    });
+  getTodos: () => {
+    return clientApi.get("/todos", {});
   },
 
-  getTodoById: (id: string, token: string) => {
-    return clientApi.get(`todos/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+  getTodoById: (id: string) => {
+    return clientApi.get(`todos/${id}`, {});
   },
 
-  create: async (token: string, todo: ITodo) => {
-    return clientApi.post("/todos", todo, {
-      headers: {
-        Authorization: token,
-      },
-    });
+  create: async (todo: ITodo) => {
+    return clientApi.post("/todos", todo, {});
   },
 
-  update: async (id: string, token: string, todo: ITodo) => {
-    return await clientApi.put(`todos/${id}`, todo, {
-      headers: {
-        Authorization: token,
-      },
-    });
+  update: async (id: string, todo: ITodo) => {
+    return await clientApi.put(`todos/${id}`, todo, {});
   },
 
-  del: async (id: string, token: string) => {
-    return await clientApi.delete(`/todos/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+  del: async (id: string) => {
+    return await clientApi.delete(`/todos/${id}`, {});
     // .then((res) => console.log(res.data));
   },
 };
