@@ -3,7 +3,7 @@
 <br><br>
 
 ## 1. 프로젝트 개요
-챌린지가 시작되기 전 먼저 ***기본 assignment***를 수행하고 2주간 리팩토링을 진행한다
+챌린지가 시작되기 전 먼저 **기본 assignment**를 수행하고 2주간 리팩토링을 진행한다
 
 ### 챌린지 목표
 1. 기술과제 연습
@@ -18,11 +18,10 @@
 
  
 ### Demo
-링크: 
-(백엔드는 배포 미완료 🥲) <br>
-<img width="800" alt="스크린샷 2022-09-18 오전 1 05 47" src="https://user-images.githubusercontent.com/82802784/190865990-356c86b0-e48f-4563-ab98-95d1c828bf9c.png">
-<img width="800" alt="스크린샷 2022-09-18 오전 1 06 04" src="https://user-images.githubusercontent.com/82802784/190866072-ade33d0e-7b6a-44f8-a014-d815a9722902.png">
-<img width="800" alt="스크린샷 2022-09-18 오전 1 08 01" src="https://user-images.githubusercontent.com/82802784/190866061-ca872102-baf3-4038-ab19-677005434b55.png">
+todo
+
+https://user-images.githubusercontent.com/82802784/195761482-ab2c0e25-961f-4a3c-97c4-fcb14f42caa4.mov
+
 
 ```
 아이디 : pppp@ppp.com
@@ -58,6 +57,11 @@
 - 한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요
   - [x] 수정되는 Todo의 내용이 목록에서도 실시간으로 반영되어야 합니다
 
+
+➕ 추가 기능 구현
+- 제목, 내용, 날짜로 todo list sorting 기능
+- 제목으로 todo 검색 기능
+
 <br><br>
 
 ## 3. 사용 스택
@@ -69,12 +73,14 @@
 
 #### 2. react-query
 - 구현 요구 사항
-(recoil 과 같이 사용하는 경우를 봤는데 todo 기능이 적기 때문에 react-query만 사용)
+- todo 데이터를 수정하고 refectching을 요청해 서버에서 다시 데이터를 받아오면서 기존 useEffect, useState로 처리하던 상태관리를 간단하게 대체 가능
+- todo를 추가하는 경우 기존 Todos - TodoList - AddTodo로 props를 넘겨야했다면 React Query를 사용하며 props drilling 없이 구현 
 
 #### 3. axios
 - 브라우저 호환성이 좋음
 - response timeout 처리 가능(시간내에 요청되지 않으면 에러 처리)
 - error 발생시 catch!
+
 
 #### 4. styled-components
 - 높은 재사용성
@@ -135,7 +141,7 @@
 ### 2. 사용자에게 편리한 UI
 - 반응형 UI
 
-https://user-images.githubusercontent.com/82802784/190865952-04b9dd35-5254-46e3-8ae3-8cda12709b67.mov
+https://user-images.githubusercontent.com/82802784/195762078-97d26b57-31a8-4f80-8ace-97773d91b47b.mov
 
 - todo 수정 <br>
 기존 <br>
@@ -146,16 +152,17 @@ todo를 수정하고 수정 버튼을 누르면 수정 완료 <br>
 
 ### 3. 수정, 삭제, 제출에 대한 확인 처리의 필요성
 - 삭제같은 치명적인 동작은 한 번 더 확인이 필요하다
-<img width="300" alt="스크린샷 2022-09-14 오후 10 07 09" src="https://user-images.githubusercontent.com/82802784/190162186-86026d55-043f-4e16-831d-2805f485cbdf.png">
-
-- alert를 사용하면 전체 기능이 멈추기 떄문에 따로 만들어 사용해 주어야 한다
-<img width="300" alt="스크린샷 2022-09-14 오후 10 07 21" src="https://user-images.githubusercontent.com/82802784/190162222-391a9378-1d33-4081-a803-1e40ba1156cf.png">
-
-material ui 사용
+- alert를 사용하면 전체 기능이 멈추기 떄문에 모달로 만들어 사용(material ui 사용)
 
 
-### 4. react-query 적용
-현재 login, register 부분에만 
+### 4. todo가 많아지면 어떻게 원하는 todo를 빠르게 찾을 수 있을까?
+- 제목, 내용, date으로 sorting 제공
+- 제목을 검색해서 바로 todo 찾기!
+
+### 5. react-query 적용
+todo 데이터를 수정하고 refectching을 요청해 서버에서 다시 데이터를 받아오면서 기존 useEffect, useState로 처리하던 상태관리를 간단하게 대체 
+또한 todo를 추가하는 경우 기존 Todos - TodoList - AddTodo로 props를 넘겨야했다면 React Query를 사용하며 props drilling 없이 구현 
+
 
 
 
