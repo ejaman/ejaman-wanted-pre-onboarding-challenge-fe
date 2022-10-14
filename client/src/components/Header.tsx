@@ -22,8 +22,9 @@ const Header = () => {
   );
 };
 const HeaderContainer = styled.header`
+  width: 100%;
   display: flex;
-  padding: 1rem 5rem 2rem;
+  padding: 2rem 0;
   align-items: center;
   @media screen and (max-width: 62.5rem) {
     width: 100%;
@@ -36,6 +37,7 @@ const LogoutButton = styled.button`
   font-weight: bold;
   background: none;
   border: none;
+  color: white;
   cursor: pointer;
   &:hover {
     opacity: 0.5;

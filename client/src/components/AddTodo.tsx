@@ -1,18 +1,21 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useCreateTodo } from "../hooks/useTodoQuery";
+import Modal from "./Modal";
 import SimpleSnackbar from "./SimpleSnackbar";
 
 // TODO: type 해결하기
 
-const AddTodo = () => {
+const AddTodo = ({
+  setIsAddOpen,
+}: {
+  setIsAddOpen: (bool: boolean) => void;
+}) => {
   const create = useCreateTodo();
   const { mutateAsync, isLoading } = create;
 
-  console.log(mutateAsync, isLoading);
-
-  const TitleRef = useRef<HTMLTextAreaElement>(null);
-  const ContentRef = useRef<HTMLTextAreaElement>(null);
+  const TitleRef = useRef<HTMLInputElement>(null);
+  const ContentRef = useRef<HTMLInputElement>(null);
   const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
   const [option, setOption] = useState<string>();
 
@@ -33,33 +36,61 @@ const AddTodo = () => {
     TitleRef.current!.value = "";
     ContentRef.current!.value = "";
     setIsAlertOpen(true);
+    setIsAddOpen(false);
   };
 
   return (
-    <AddContainer>
-      <Text>New Task</Text>
-      <Title ref={TitleRef} placeholder="Title" spellCheck={false} />
-      <Textarea ref={ContentRef} placeholder="Content" spellCheck={false} />
-      <AlignButton>
-        <BasicButton onClick={onhandleAdd}>ADD</BasicButton>
-      </AlignButton>
-      {isAlertOpen && (
-        <SimpleSnackbar
-          option={option}
-          isAlertOpen={isAlertOpen}
-          setIsAlertOpen={setIsAlertOpen}
-        />
-      )}
-    </AddContainer>
+    <Modal
+      _handleModal={() => {
+        setIsAddOpen(false);
+      }}
+    >
+      <AddContainer>
+        <Button
+          onClick={() => {
+            setIsAddOpen(false);
+          }}
+        >
+          x
+        </Button>
+        <Text>New Task</Text>
+        <Title ref={TitleRef} placeholder="Title" spellCheck={false} />
+        <Textarea ref={ContentRef} placeholder="Content" spellCheck={false} />
+        <AlignButton>
+          <AddButton onClick={onhandleAdd}>ADD</AddButton>
+        </AlignButton>
+        {isAlertOpen && (
+          <SimpleSnackbar
+            option={option}
+            isAlertOpen={isAlertOpen}
+            setIsAlertOpen={setIsAlertOpen}
+          />
+        )}
+      </AddContainer>
+    </Modal>
   );
 };
 
 export const AddContainer = styled.section`
-  border-top: 2px solid;
-  height: 14rem;
-  margin-right: 1rem;
-  width: 90%;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
 `;
+
+const Button = styled.button`
+  background: black;
+  margin-left: auto;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 800;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+`;
+
 const Text = styled.header`
   font-weight: 600;
   font-size: 2rem;
@@ -71,12 +102,11 @@ const AlignButton = styled.div`
   text-align: left;
 `;
 
-export const Input = styled.textarea`
+export const Input = styled.input`
   display: flex;
   border: none;
   background: none;
   outline: none;
-  width: 30rem;
   font-family: sans-serif;
   resize: none;
   overflow: hidden;
@@ -97,17 +127,21 @@ export const Title = styled(Input)`
 `;
 
 export const Textarea = styled(Input)`
-  padding: 1rem 0.5rem;
   margin-bottom: 1rem;
-  height: 4rem;
 `;
 export const BasicButton = styled.button`
+  margin: auto;
   background: none;
   border: none;
   font-weight: bold;
+  color: white;
   cursor: pointer;
   &:hover {
     opacity: 0.6;
   }
+`;
+
+const AddButton = styled(BasicButton)`
+  color: black;
 `;
 export default AddTodo;

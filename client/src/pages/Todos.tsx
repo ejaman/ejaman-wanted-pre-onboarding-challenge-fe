@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-scroll";
 import styled from "styled-components";
 import { IList } from "../apis/ToDo";
 import AddTodo from "../components/AddTodo";
+import Search from "../components/Search";
+import Sort from "../components/Sort";
 import TodoList from "../components/TodoList";
 import { useGetTodos } from "../hooks/useTodoQuery";
 
 const Todos = () => {
   const token = localStorage.getItem("token") || "";
   const navigate = useNavigate();
-  const { isLoading, data, isError } = useGetTodos(token);
+  const { isLoading, data } = useGetTodos(token);
+  const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [sortValue, setSortValue] = useState<string>("title");
 
   useEffect(() => {
     // 로그인이 되어있다면 바로 리다이렉트되도록
@@ -21,34 +25,53 @@ const Todos = () => {
     return <h2>Loading...</h2>;
   }
 
-  if (isError) {
-    return <h2>error occur</h2>;
-  }
+  const searchResult = data?.data
+    .filter((list: IList) =>
+      list.title.toLowerCase().includes(searchValue.toLowerCase())
+    )
+    .sort((a: IList, b: IList) => {
+      if (sortValue === "title") {
+        return a.title.localeCompare(b.title);
+      } else if (sortValue === "content") {
+        return a.content.localeCompare(b.content);
+      } else if (sortValue === "date") {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }
+    });
 
   return (
     <Container id="top">
-      <Nav>
-        {data?.data.map((list: IList, idx: number) => (
-          <Li key={idx}>
-            <Link to={list.id} spy={true} smooth={true}>
-              {list.title}
-            </Link>
-          </Li>
-        ))}
-        <TopButton>
-          <Link to="top" spy={true} smooth={true}>
-            TOP
-          </Link>
-        </TopButton>
-      </Nav>
       <Content>
-        <Title>WANTED PREONBOARDING CHALLENGE</Title>
-        <section>
-          <AddTodo />
-        </section>
+        <Section>
+          <Search
+            setSearchValue={(value: string) => {
+              setSearchValue(value);
+            }}
+          />
+          <Button
+            onClick={() => {
+              setIsAddOpen(true);
+            }}
+          >
+            Add Todo
+          </Button>
+
+          {isAddOpen && (
+            <AddTodo
+              setIsAddOpen={() => {
+                setIsAddOpen(false);
+              }}
+            />
+          )}
+        </Section>
+        <Sort
+          setSortValue={(value: string) => {
+            setSortValue(value);
+          }}
+        />
         <section>
           {data ? (
-            data?.data.map((list: IList, idx: number) => (
+            searchResult.map((list: IList, idx: number) => (
               <TodoList list={list} key={idx} id={list.id} />
             ))
           ) : (
@@ -61,10 +84,10 @@ const Todos = () => {
 };
 
 const Container = styled.div`
-  width: 70%;
-  margin: auto;
-  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
+  padding: 1rem;
   @media screen and (max-width: 62.5rem) {
     width: 100%;
     margin: 0;
@@ -72,51 +95,30 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.header`
-  flex: 60%;
-  font-weight: 800;
-  font-size: 4rem;
-  text-align: left;
-  @media screen and (max-width: 62.5rem) {
-    font-size: 3rem;
-    flex: 1;
-  }
+const Section = styled.section`
+  display: flex;
+  gap: 1rem;
+  padding: 0 0 2rem 0;
 `;
 
-const Nav = styled.nav`
-  flex: 25%;
-  text-align: left;
-  font-size: 1.2rem;
-  padding: 1rem;
-  cursor: pointer;
-  @media screen and (max-width: 62.5rem) {
-    display: none;
-  }
-`;
-
-const TopButton = styled.p`
+const Button = styled.button`
+  border-radius: 50%;
+  border: 2px solid white;
   background: none;
-  font-weight: bold;
-  border: none;
-  font-size: 1.2rem;
-  position: fixed;
-  bottom: 0;
-  margin-bottom: 3rem;
+  color: white;
+  font-weight: 600;
+  width: 3rem;
+  text-align: center;
+  margin-left: auto;
   &:hover {
     opacity: 0.5;
   }
 `;
+
 const Content = styled.div`
   flex: 75%;
   @media screen and (max-width: 62.5rem) {
     flex: 1;
-    width: 100%;
-  }
-`;
-const Li = styled.li`
-  list-style: none;
-  font-weight: 500;
-  @media screen and (max-width: 62.5rem) {
     width: 100%;
   }
 `;

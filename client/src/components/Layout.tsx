@@ -3,12 +3,19 @@ import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
+const Background = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 375px;
+  margin: auto;
+
   @media screen and (max-width: 62.5rem) {
     width: 100%;
-    padding-right: 0.5rem;
+    box-sizing: border-box;
+    padding-right: 1.5rem;
   }
 `;
 
@@ -18,11 +25,13 @@ const ContentWrapper = styled.div`
 
 export default function Layout() {
   return (
-    <Container>
-      <Header />
-      <ContentWrapper>
-        <Outlet />
-      </ContentWrapper>
-    </Container>
+    <Background>
+      <Container>
+        <Header />
+        <ContentWrapper>
+          <Outlet />
+        </ContentWrapper>
+      </Container>
+    </Background>
   );
 }
