@@ -10,13 +10,14 @@ export const Container = styled.section`
   padding: 1rem;
   font-size: 1.4rem;
   margin: auto;
+  color: #e9e4dd;
 `;
 
 export const LoginInput = styled.input`
   width: 90%;
   border: none;
   background: none;
-  border-bottom: 2px solid;
+  border-bottom: 2px solid #e9e4dd;
   outline: none;
   font-weight: 500;
   font-size: 1.2rem;
@@ -32,8 +33,8 @@ export const PText = styled.div`
 export const BasicButton = styled.button`
   padding: 0.6rem;
   margin-top: 0.5rem;
-  background-color: black;
-  color: #e9e4dd;
+  background-color: #e9e4dd;
+
   border: thin;
   border-radius: 5px;
   width: 95%;

@@ -39,7 +39,7 @@ function App() {
           </BrowserRouter>
         </RecoilRoot>
         {/* 디퐅트로 열리지 않게 하기 위해서 */}
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
       </QueryClientProvider>
     </React.StrictMode>
   );

@@ -108,6 +108,7 @@ const Input = styled.input`
   font-size: 1rem;
   color: black;
   color: white;
+  outline: none;
 `;
 
 const Title = styled(Input)`
